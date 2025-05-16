@@ -1,0 +1,18 @@
+[오늘 한 일]
+boardService 클래스의 일부 메서드에 개선 작업을 수행했다.
+boardService 클래스의 읽기 작업 메서드에 대한 통합 테스트 메서드를 작성하였다.
+PostNotFoundException 예외 클래스를 작성하여 존재하지 않는 게시글 접근에 대한 예외 처리를 추가하였다.
+boardService의 일부 코드를 Optional을 활용한 코드로 리팩토링 했다.
+
+
+
+[새로 적용한 코드]
+예외 발생 여부와 메세지를 테스트하는 코드를 assertj를 통해 작성함
+assertThatThrownBy(() -> boardService.getFile(2L))
+                    .isInstanceOf(PostNotFoundException.class)
+                    .hasMessage("2번 게시글은 존재하지 않습니다.");
+
+
+ResponseEntity에 대한 테스트 코드를 작성함.
+assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+assertThat(response.getBody()).isEqualTo("File not found");
