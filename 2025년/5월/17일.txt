@@ -1,0 +1,17 @@
+[오늘 한 일]
+boardService의 명령 메소드 통합 테스트 코드 추가
+memberService의 읽기, 명령 메소드 통합 테스트 코드 추가
+member가 존재하지 않을 경우 발생시킬 MemberNotFoundException 추가
+DTO에 null값이 담길 경우 발생하는 DtoNullException 추가
+
+
+
+[개선한 부분]
+boardService와 memberService의 명령 메소드에
+잘못된 정수값(0 이하 음의 정수) 입력시 IllegalArgumentException을 발생시키도록 개선함
+
+boardService와 memberService의 명령 메소드에
+Null 값을 가진 Dto가 입력되면 NullPointerException을 발생키는데
+이 때 원인을 분석하기 쉽도록 DtoNullException 을 발생시켜서 더 명확한 원인을 인식할 수 있도록 개선함
+
+
