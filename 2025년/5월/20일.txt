@@ -1,0 +1,26 @@
+[오늘 한 일]
+아래 컨트롤러들의 단위 테스트 코드 작성
+BoardController
+BoardRestController
+SessionRestController
+ViewController
+
+
+[새로 적용한 부분]
+인스턴스 안에 내부 인스턴스가 존재하는 형태의 검증을 위한 테스트 코드 작성
+.andExpect(model().attribute("option", hasProperty("userOption", allOf(
+                hasProperty("userId", is("")),
+                hasProperty("id", is(nullValue()))
+        ))))
+
+
+ObjectMapper를 이용하여 객체를 json 문자열 형태로 변환한 후 검증하는 테스트 코드 작성
+ResponseDTO responseDTO = new ResponseDTO(true);
+String ResponseJson = objectMapper.writeValueAsString(responseDTO);
+
+
+
+[개선이 필요한 부분]
+서버 처리 실패로 오류 메세지를 응답 할 경우에도 상태 코드가 200 OK로 나오는 구조적 문제
+이 경우 상황에 따라 INTERNAL_SERVER_ERROR 등 응답 형태를 구성해야할 필요성 발견
+추후 컨트롤러 응답 코드 개선 예정
