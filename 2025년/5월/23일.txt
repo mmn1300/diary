@@ -1,0 +1,36 @@
+[오늘 한 일]
+테스트 코드 태그 세분화로 원하는 테스트들만을 일괄 실행 할 수 있도록 코드를 개선함
+
+아래 컨트롤러들의 api 응답 형태 개선
+AccountRestController
+BoardRestController
+
+ApiResponse 클래스 구현. 서버 처리 상황에 따라 상태코드와 메세지, 데이터를 담아 응답할 수 있음
+
+응답 형태 변경에 따른 클라이언트 JQuery 코드 리팩토링
+응답 형태 변경에 따른 컨트롤러 테스트 코드들 일부 변경
+
+
+
+[새로 적용한 부분]
+@GetMapping("/file/{postNum}")
+    public ResponseEntity<ApiResponse<ResponseDTO>> getFileName(@PathVariable("postNum") Long postNum) {
+        try{
+            String result = boardService.isFileExists(postNum);
+            return ResponseEntity.ok(ApiResponse.ok(new FileNameDTO(true, result)));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body(ApiResponse.internalServerError(e.getMessage()));
+        }
+    }
+
+ResponseEntity<ApiResponse<ResponseDTO>> 형태의 응답으로,
+기존 ResponseDTO 응답 보다 더 정확한 내용을 클라이언트에 보낼 수 있음
+
+이전 서버 처리 실패로 오류 메세지를 응답 할 경우에도 상태 코드가 200 OK로 나오는 구조적 문제를 개선한 형태.
+
+
+
+[개선이 필요한 부분]
+SessionRestController 또는 @Controller 컨트롤러들도 더 정확한 응답을 위한 코드 개선
+@RestControllerAdvice 클래스를 추가하여 요청 데이터 검증 실패에 대한 응답을 헨들링하는 코드 추가
