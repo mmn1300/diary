@@ -1,0 +1,29 @@
+[오늘 한 일]
+SessionRestController의 api 응답 구조 개선
+@Controller의 컨트롤러들을 ModelAndView 를 통해 한 번에 응답하고 상태 코드를 지정함
+
+
+[새로 적용한 부분]
+@PostMapping("/login")
+    public ModelAndView login(@Valid @ModelAttribute AccountDTO accountDTO, HttpSession session,
+                        RedirectAttributes redirectAttributes) {
+        try{
+            sessionService.createSession(session, memberService.getMemberByUserId(accountDTO.getId()));
+        }catch(Exception e){
+            RedirectView redirectView = new RedirectView("/error");
+            redirectView.setStatusCode(HttpStatus.SEE_OTHER);
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return new ModelAndView(redirectView);
+        }
+        RedirectView redirectView = new RedirectView("/board");
+        redirectView.setStatusCode(HttpStatus.SEE_OTHER);
+        return new ModelAndView(redirectView);
+    }
+
+기존 Model을 통한 데이터 전송 대신 ModeAndView를 통한 일괄적인 데이터 세팅 및 상태코드 지정 가능.
+
+
+
+[개선이 필요한 부분]
+@RestControllerAdvice 클래스를 추가하여 요청 데이터 검증 실패에 대한 응답을 헨들링하는 코드 추가
+예외처리 핸들러를 추가하여 컨트롤러들에서 중복되는 코드를 줄이고 동일 예외 상황에 대한 응답 설정을 한 곳에서 관리
