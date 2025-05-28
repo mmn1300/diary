@@ -1,0 +1,21 @@
+[오늘 한 일]
+Controller 계층 테스트 코드 공통 선언부 추상클래스를 사용하여 한 곳에 정의
+
+
+[새로 적용한 부분]
+
+@WebMvcTest(controllers = AccountRestController.class)
+public class AccountRestControllerUnitTestSupport {
+        
+    @Autowired
+    protected MockMvc mockMvc;
+
+    @MockitoBean
+    protected MemberService memberService;
+
+    @MockitoBean
+    protected SessionService sessionService;
+}
+
+이후 테스트 코드에서는 이 추상 클래스를 상속받아 별도의 선언 없이 테스트 코드를 작성할 수 있음.
+중복 코드를 최소화함
