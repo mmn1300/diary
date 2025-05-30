@@ -1,0 +1,17 @@
+[오늘 한 일]
+서비스 계층 통합 테스트 코드 개선
+BoardService의 통합 테스트 코드들의 부모 클래스에 setUp(), tearDown(), cleanUp() 정의
+자식 클래스인 테스트 클래스에서 변경 필요시 @Override를 사용하여 오버라이딩하여 사용
+
+
+
+[새로 적용한 부분]
+
+@BeforeAll
+public void setUp(){ ... }
+
+@AfterAll
+public void cleanUp(){ ... }
+
+위 두 메소드를 미리 정의하여 테스트 코드의 given부분을 줄여 중복 코드를 최소화함.
+
