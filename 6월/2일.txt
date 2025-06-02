@@ -1,0 +1,21 @@
+[ 오늘 한 일 ]
+통합 테스트 코드 중 예외처리와 관련된 부분은 단위 테스트로 이동.
+하위 모듈에서 예외를 발생시키는 경우 Stubbing 처리함
+
+
+[ 새로 적용한 부분 ]
+
+    @Mock
+    protected BoardServiceCommands boardServiceCommands;
+
+    @Mock
+    protected BoardServiceQuerys boardServiceQuerys;
+
+    @Mock
+    protected MemberServiceQuerys memberServiceQuerys;
+
+    @InjectMocks
+    protected BoardServiceImp boardService;
+
+
+단위 테스트를 수행할 모듈에 여러 의존성이 있는경우, 각각 Mock을 만들어 의존성을 주입하여 사용
